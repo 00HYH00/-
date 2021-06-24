@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>订单页面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/all.css"> -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="js/all.js"></script>
+
+    <style>
+        .dropdown>button:focus {
+            box-shadow: 0 0 0 0rem !important;
+        }
+
+        .btn-cart {
+            background-color: transparent;
+            position: relative;
+        }
+
+        .dropdown .btn-cart .badge {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+        }
+
+        .dropdown-menu-right {
+            right: 0px;
+            left: auto;
+        }
+
+        .jumbotron-bg {
+            background-image: url('https://images.unsplash.com/photo-1477901492169-d59e6428fc90?w=1350');
+            background-size: cover;
+            background-position: center center;
+            min-height: 400px;
+        }
+
+        .bg-lighter {
+            background-color: rgba(255, 255, 255, .65);
+        }
+
+        .box-shadow {
+            box-shadow: 0 3px 5px rgba(0, 0, 0, .16);
+            transition: box-shadow .3s;
+        }
+
+        .header-carousel-item {
+            height: 450px;
+        }
+
+        .form-control {
+          border-width: 3px;
+        }
+
+        .bg-cover {
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, .6);
+        }
+
+        .col-lg-2p {
+            position: relative;
+            min-height: 1px;
+            padding-right: 10px;
+            padding-left: 10px;
+            width: 16.6%;
+            float: left;
+        }
+
+        @media(min-width: 768px) {
+            .text-md-dark {
+                color: #333;
+            }
+            .col-lg-7 {
+                width: 58.3%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <i class="fa fa-coffee text-info" aria-hidden="true"></i>
+            饮杯茶先
+        </a>
+        <form class="form-inline my-2 my-lg-0">
+            <input type="search" class="form-control col-md-4 col-9 rounded-0" style="width: 300px;" placeholder="搜索饮品" aria-label="Search">
+            <button class="btn btn-outline-warning my-2 my-sm-0 rounded-0" type="submit">搜索</button>
+        </form>
+        <div class="dropdown ml-auto">       
+            <button class="btn btn-sm btn-cart" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <strong style="font-size: 20px;">查看购物袋</strong>
+                <i class="fa fa-shopping-cart text-dark fa-2x" aria-hidden="true"></i>
+                <span class="badge badge-pill badge-danger">2</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right p-2" style="min-width: 300px;" aria-labelledby="dropdownMenuButton">
+                <table class="table table-sm">
+                    <h6 class="mb-3 pt-2">已选择饮品</h6>
+                    <tbody>
+                        <tr>
+                            <td class="align-middle text-center">
+                                <a href="#removeModal" class="text-muted" data-toggle="modal" data-target="#removeModal" data-title="删除 多肉蓝莓 1 杯" data-backdrop="static">
+                                    <i class="far fa-trash-alt" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td class="align-middle">多肉蓝莓</td>
+                            <td class="align-middle">1 杯</td>
+                            <td class="align-middle text-center">￥29</td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle text-center">
+                                <a href="#removeModal" class="text-muted" data-toggle="modal" data-target="#removeModal" data-title="删除 芒果甘露 1 杯" data-backdrop="static">
+                                    <i class="far fa-trash-alt" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td class="align-middle">芒果甘露</td>
+                            <td class="align-middle">1 杯</td>
+                            <td class="align-middle text-center">￥27</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="./Index.html" class="btn btn-primary btn-block">继续选购</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-contant mt-4 bg-light" style="border: 2px solid cornflowerblue;">
+        <h1 class="text-center mb-3 text-secondary">饮杯茶先 外卖结账</h1>
+        <div class="form-row text-center">
+            <div class="col-12 col-sm">
+                <div class="alert alert-primary alert-rounded" role="alert">
+                    1、输入订单资料
+                </div>
+            </div>
+            <div class="col-12 col-sm">
+                <div class="alert alert-secondary alert-rounded" role="alert">
+                    2、金流付款
+                </div>
+            </div>
+            <div class="col-12 col-sm">
+                <div class="alert alert-secondary alert-rounded" role="alert">
+                    3、完成
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" style="margin-top: -50px;">
+            <div class="col-md-8">
+                
+                <div class="card border-0 rounded-20 mt-5 bg-primary">
+                    <div class="card-header border-bottom-0">
+                        <h3 class="text-center text-white">用户信息</h3>
+                    </div>
+                </div>
+
+                <form class="mt-3 needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="name">姓名</label>
+                            <input type="text" class="form-control" id="name" placeholder="姓名" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="email">联系电话</label>
+                            <input type="email" class="form-control" id="email" placeholder="联系电话" required>
+                        </div>
+                        <div class="form-group col-md-10">
+                            <label for="address">送货地址</label>
+                            <input type="text" class="form-control" id="address" placeholder="送货地址" required>
+                        </div>
+                        <div class="form-group col-md-1 mt-3 nav flex-column justify-content-center" style="text-align: right;">
+                            <i class="fas fa-globe" style="font-size: 30px"></i>
+                        </div>
+                        <div class="form-group col-md-1 mt-4 nav flex-column justify-content-center">
+                            <label style="font-size: 5px; "><b>智能定位</b></label>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="address">备注</label>
+                            <input type="text" class="form-control" id="address" placeholder="" required>
+                        </div>             
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-0 rounded-20 mt-5 bg-primary">
+                    <div class="card-header border-bottom-0">
+                        <h3 class="text-center text-white">订单内容</h3>
+                    </div>
+                </div>
+
+                <form class="mt-3 needs-validation" novalidate>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <img class="card-img-top" src="./images/多肉蓝莓.png" alt="Card image cap">
+                        </div>
+                        <div class="form-group col-md-4 nav flex-column justify-content-center">
+                            <label>多肉蓝莓<small> x</small>1</label>
+                        </div>
+                        <div class="form-group col-md-3 nav flex-column justify-content-center" style="text-align: right;">
+                            <h5>￥29</h5>
+                        </div>
+
+                        <div class="form-group col-md-5">
+                            <img class="card-img-top" src="./images/芒果甘露.jpg" alt="Card image cap">
+                        </div>
+                        <div class="form-group col-md-4 nav flex-column justify-content-center">
+                            <label>芒果甘露<small> x</small>1</label>
+                        </div>
+                        <div class="form-group col-md-3 nav flex-column justify-content-center"  style="text-align: right;">
+                            <h5>￥27</h5>
+                        </div>
+
+                        <div class="form-group col-md-5 nav flex-column justify-content-center" style="text-align: center;">
+                            <label><small>配送费</small></label>
+                        </div>
+                        <div class="form-group col-md-4 nav flex-column justify-content-center">
+                        </div>
+                        <div class="form-group col-md-3 nav flex-column justify-content-center"  style="text-align: right;">
+                            <h6>￥5</h6>
+                        </div>
+                        
+                        <div class="form-group col-md-12 nav flex-column justify-content-center"  style="text-align: right;border-top: 2px solid gray;">
+                            <h3>￥61</h3>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="#" class="btn btn-secondary mr-1">继续选购</a>
+                        <button type="submit" class="btn btn-primary">确认付款</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    <section class="py-5">
+        <div class="container bg-light" style="border: 2px solid cornflowerblue;">
+            <div class="row justify-content-center">
+                <h1 class="text-center mb-3 col-lg-3 text-white bg-primary" style="border-radius: 10%;">订单跟踪</h1>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="row col-lg-8 justify-content-center">
+                    <div class="row col-lg-2p justify-content-center">
+                        <h6 class="text-primary" style="text-align: center;">提交订单</h6>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <h6 class="text-primary" style="text-align: center;">支付成功</h6>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <h6 class="text-secondary" style="text-align: center;">商家接单</h6>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <h6 class="text-secondary" style="text-align: center;">骑手取货</h6>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <h6 class="text-secondary" style="text-align: center;">订单送达</h6>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <h6 class="text-secondary" style="text-align: center;">订单完成</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mb-3">
+                <div class="row col-lg-8 justify-content-center">
+
+                    <div class="col-lg-7 bg-primary" style="position: absolute; height: 5px; top: 40%;"></div>
+                    
+                    <div class="row col-lg-2p justify-content-center">
+                        <div class="col-lg-2p bg-primary" style="border-radius: 50%; width: 23px;">&nbsp;</div>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <div class="col-lg-2p bg-primary" style="border-radius: 50%; width: 23px;">&nbsp;</div>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <div class="col-lg-2p bg-secondary" style="border-radius: 50%; width: 23px;">&nbsp;</div>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <div class="col-lg-2p bg-secondary" style="border-radius: 50%; width: 23px;">&nbsp;</div>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <div class="col-lg-2p bg-secondary" style="border-radius: 50%; width: 23px;">&nbsp;</div>
+                    </div>
+                    <div class="row col-lg-2p justify-content-center">
+                        <div class="col-lg-2p bg-secondary" style="border-radius: 50%; width: 23px;">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+                    <html xmlns="http://www.w3.org/1999/xhtml">
+                    <head>
+                        <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+                        <meta name="keywords" content="百度地图,百度地图API，百度地图自定义工具，百度地图所见即所得工具" />
+                        <meta name="description" content="百度地图API自定义地图，帮助用户在可视化操作下生成百度地图" />
+                        <title>百度地图API自定义地图</title>
+                        <!--引用百度地图API-->
+                        <style type="text/css">
+                            html,body{margin:0;padding:0;}
+                            .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+                            .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+                        </style>
+                        <script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+                    </head>
+            
+                    <body>
+                        <!--百度地图容器-->
+                        <div style="width:100%;height:550px;border:#ccc solid 1px;" id="dituContent"></div>
+                    </body>
+                    <script type="text/javascript">
+                        //创建和初始化地图函数：
+                        function initMap(){
+                            createMap();//创建地图
+                            setMapEvent();//设置地图事件
+                            addMapControl();//向地图添加控件
+                        }
+                        
+                        //创建地图函数：
+                        function createMap(){
+                            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+                            var point = new BMap.Point(113.779277,23.057033);//定义一个中心点坐标
+                            map.centerAndZoom(point,17);//设定地图的中心点和坐标并将地图显示在地图容器中
+                            window.map = map;//将map变量存储在全局
+                        }
+                        
+                        //地图事件设置函数：
+                        function setMapEvent(){
+                            map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+                            map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+                            map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+                            map.enableKeyboard();//启用键盘上下左右键移动地图
+                        }
+                        
+                        //地图控件添加函数：
+                        function addMapControl(){
+                            //向地图中添加缩放控件
+                        var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+                        map.addControl(ctrl_nav);
+                            //向地图中添加缩略图控件
+                        var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+                        map.addControl(ctrl_ove);
+                            //向地图中添加比例尺控件
+                        var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+                        map.addControl(ctrl_sca);
+                        }
+                        
+                        
+                        initMap();//创建和初始化地图
+                    </script>
+                    </html>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
+                <a href="#" class="btn btn-secondary mr-3" style="width: 30%;">
+                    <i class="far fa-times-circle" style="font-size: 25px;">&nbsp;取消订单</i>
+                </a>
+                <button type="submit" class="btn btn-primary" style="width: 30%;">
+                    <i class="fas fa-phone-alt" style="font-size: 25px;">&nbsp;联系骑手</i>
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="bg-light text-muted py-3">
+        <div class="contianer">
+            <ul class="list-inline text-center">
+                <li class="list-inline-item">© Copright 2021 饮杯茶先</li>
+                <li class="list-inline-item">
+                    <a href="#" class="text-info">
+                        <i class="fab fa-weixin"></i> 微信
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="./Backend.html" class="text-info">了解更多</a>
+                </li>
+            </ul>
+            <p class="text-center">Made with Bootstrap5</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

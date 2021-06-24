@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>后台管理页面</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/ulg/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+    <script>
+        window.chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+
+        var randomScalingFactor = function () {
+            return Math.round(Math.random() * 100);
+        };
+
+        var config_1 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                    ],
+                    backgroundColor: [
+                    window.chartColors.green,
+                    window.chartColors.yellow,
+                    window.chartColors.orange,
+                    window.chartColors.grey,
+                    ],
+                    label: 'Dataset 1'
+                }],
+                labels: [
+                    "15岁以下",
+                    "15-25岁",
+                    "26-40岁",
+                    "40岁以上",
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        };
+
+        var config_2 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                    ],
+                    backgroundColor: [
+                        window.chartColors.blue,
+                        window.chartColors.red,
+                    ],
+                    label: 'Dataset 2'
+                }],
+                labels: [
+                    "男性",
+                    "女性",
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        };
+
+        // bar
+        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var colors = Chart.helpers.color;
+        var barChartData = {
+            labels: ["一月", "二月", "三月", "四月", "五月", "六月", "七月"],
+            datasets: [{
+                label: '自取订单',
+                backgroundColor: colors(window.chartColors.grey).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
+                ]
+            }, {
+                label: '外卖订单',
+                backgroundColor: colors(window.chartColors.blue).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.blue,
+                borderWidth: 1,
+                data: [
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor(),
+                    randomScalingFactor()
+                ]
+            }]
+
+        };
+
+        window.onload = function () {
+            // pie
+            document.querySelectorAll('.chart-item-1').forEach(function (item) {
+                config_1.data.datasets.forEach(function (dataset) {
+                    dataset.data = dataset.data.map(function () {
+                        return randomScalingFactor();
+                    });
+                });
+                var ctx = item.getContext("2d");
+                window.myPie = new Chart(ctx, config_1);
+            })
+
+            document.querySelectorAll('.chart-item-2').forEach(function (item) {
+                config_2.data.datasets.forEach(function (dataset) {
+                    dataset.data = dataset.data.map(function () {
+                        return randomScalingFactor();
+                    });
+                });
+                var ctx = item.getContext("2d");
+                window.myPie = new Chart(ctx, config_2);
+            })
+
+            // bar
+            var barCtx = document.getElementById("barCanvas").getContext("2d");
+            window.myBar = new Chart(barCtx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            });
+
+        };
+    </script>
+
+    <style>
+        .dropdown>button:focus {
+            box-shadow: 0 0 0 0rem !important;
+        }
+
+        .btn-cart {
+            background-color: transparent;
+            position: relative;
+        }
+
+        .dropdown .btn-cart .badge {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+        }
+
+        .dropdown-menu-right {
+            right: 0px;
+            left: auto;
+        }
+
+        .jumbotron-bg {
+            background-image: url('https://images.unsplash.com/photo-1477901492169-d59e6428fc90?w=1350');
+            background-size: cover;
+            background-position: center center;
+            min-height: 400px;
+        }
+
+        .bg-lighter {
+            background-color: rgba(255, 255, 255, .65);
+        }
+
+        .box-shadow {
+            box-shadow: 0 3px 5px rgba(0, 0, 0, .16);
+            transition: box-shadow .3s;
+        }
+
+        .header-carousel-item {
+            height: 450px;
+        }
+
+        .form-control {
+          border-width: 3px;
+        }
+
+        .bg-cover {
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, .6);
+        }
+
+        .circle_r, .circle_g, .circle_b, .circle_y, .circle_o { 
+           width: 100px; height: 100px;
+            border-radius: 50%;
+            background: none; 
+        }
+
+        .circle_r {
+            border: 4px solid red;
+        }
+
+        .circle_g {
+            border: 4px solid green;
+        }
+
+        .circle_b {
+            border: 4px solid blue;
+        }
+
+        .circle_y {
+            border: 4px solid yellow;
+        }
+
+        .circle_o {
+            border: 4px solid orange;
+        }
+
+        .col-lg-1-5 {
+            position: relative;
+            min-height: 1px;
+            padding-right: 10px;
+            padding-left: 10px;
+            width: 20%;
+            float: left;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <i class="fa fa-coffee text-info" aria-hidden="true"></i>
+            饮杯茶先
+        </a>
+        <form class="form-inline my-2 my-lg-0">
+            <input type="search" class="form-control col-md-4 col-9 rounded-0" style="width: 400px;" placeholder="查询交易数据" aria-label="Search">
+            <button class="btn btn-outline-warning my-2 my-sm-0 rounded-0" type="submit">查询</button>
+        </form>
+        <div class="dropdown ml-auto">          
+            <button class="btn btn-sm btn-cart" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <strong style="font-size: 20px;">后台管理系统</strong>
+                <i class="fas fa-user-cog" style="font-size: 30px;"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="text-align: center;">
+                <li><a class="dropdown-item bg-primary text-white" href="#">登录</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item bg-secondary text-white" href="./Index.html">注销</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4 main">
+        <div class="card" style="background: ghostwhite;">
+            <b>⚪当周数据</b>
+            <div class="row">
+                <div class="col-lg-1-5 text-center">
+                    <div class=" circle_r text-center nav flex-column justify-content-center" style="margin: 0 auto; background: white;">
+                        <h6>自取订单</h6>
+                        <h3>368</h3>
+                    </div>
+                    今日新增：9
+                </div>
+                <div class="col-lg-1-5 text-center">
+                    <div class=" circle_g text-center nav flex-column justify-content-center"  style="margin: 0 auto; background: white;">
+                        <h6>外卖订单</h6>
+                        <h3>191,9</h3>
+                    </div>
+                    今日增加：54
+                </div>
+                <div class="col-lg-1-5 text-center">
+                    <div class=" circle_b text-center nav flex-column justify-content-center" style="margin: 0 auto; background: white;">
+                        <h6>待制作订单</h6>
+                        <h3>114</h3>
+                    </div>
+                    今日增加：16
+                </div>
+                <div class="col-lg-1-5 text-center">
+                    <div class=" circle_y text-center nav flex-column justify-content-center" style="margin: 0 auto; background: white;">
+                        <h6>退款订单</h6>
+                        <h3>28</h3>
+                    </div>
+                    今日增加：3
+                </div>
+                <div class="col-lg-1-5 text-center">
+                    <div class=" circle_o text-center nav flex-column justify-content-center" style="margin: 0 auto; background: white;">
+                        <h6>成交金额</h6>
+                        <h3>514,81</h3>
+                    </div>
+                    今日增加：198,2
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <section class="col-lg-5">
+            <div class="card rounded-0">
+                <div class="card-header btn-primary active">订单类型</div>
+                <div class="card-body" style="background: ghostwhite;">
+                    <canvas id="barCanvas" ></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <section class="col-lg-7">
+            <div class="card h-100">
+                <div class="card-header btn-primary active">用户分布</div>
+                <div class="card-body align-items-center" style="background: ghostwhite;">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <canvas class="chart-item-1"></canvas>
+                        </div>
+                        <div class="col-lg-5 nav flex-column justify-content-center">
+                            <canvas class="chart-item-2"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="card rounded-0">
+        <div class="card-header btn-primary active">
+            <div class="d-flex">
+                <div class="form-inline">
+                    <div class="form-group">
+                        每日订单数据&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="month" class="sr-only">日期</label>
+                        <select name="" id="month" class="form-control form-control-sm">
+                            <option value="1">6.19</option>
+                            <option value="2">6.18</option>
+                            <option value="3">6.17</option>
+                            <option value="4">6.16</option>
+                            <option value="5">6.15</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="ml-auto">
+                    <a href="#" class="btn btn-light active btn-sm">下载报表</a>
+                    <a href="#" class="btn btn-light active btn-sm">订单管理</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card" style="border: 2px solid red;">
+                        <table class="table" style="background: ghostwhite;">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" width: 150>自取订单</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：4654151564</td>
+                                    <td style="font-size: 1px;">8:31</td>
+                                </tr>
+                                <tr>
+                                    <td>多肉蓝莓</td>
+                                    <td style="font-size: 2px;">羽翼侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：9942468186</td>
+                                    <td style="font-size: 1px;">9:35</td>
+                                </tr>
+                                <tr>
+                                    <td>草莓芝草</td>
+                                    <td style="font-size: 2px;">爆热女郎</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：8416548145</td>
+                                    <td style="font-size: 1px;">9:58</td>
+                                </tr>
+                                <tr>
+                                    <td>芒果甘露</td>
+                                    <td style="font-size: 2px;">黏土侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：2484184297</td>
+                                    <td style="font-size: 1px;">10:02</td>
+                                </tr>
+                                <tr>
+                                    <td>蜜糖红柚</td>
+                                    <td style="font-size: 2px;">电光侠</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><b>累计订单</b></th>
+                                    <td><b>9</b></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="card" style="border: 2px solid green;">
+                        <table class="table" style="background: ghostwhite;">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" width: 150>外卖订单</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：0920705324</td>
+                                    <td style="font-size: 1px;">8:37</td>
+                                </tr>
+                                <tr>
+                                    <td>多肉酸梅</td>
+                                    <td style="font-size: 2px;">天空侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：6212990351</td>
+                                    <td style="font-size: 1px;">9:23</td>
+                                </tr>
+                                <tr>
+                                    <td>雪思龙眼</td>
+                                    <td style="font-size: 2px;">海洋侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：0595513620</td>
+                                    <td style="font-size: 1px;">9:46</td>
+                                </tr>
+                                <tr>
+                                    <td>椰芒糯米</td>
+                                    <td style="font-size: 2px;">森林侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：0183918749</td>
+                                    <td style="font-size: 1px;">10:35</td>
+                                </tr>
+                                <tr>
+                                    <td>冰山杨桃</td>
+                                    <td style="font-size: 2px;">小花蕾</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><b>累计订单</b></th>
+                                    <td><b>54</b></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="card" style="border: 2px solid blue;">
+                        <table class="table" style="background: ghostwhite;">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" width: 150>已完成订单</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：4234030867</td>
+                                    <td style="font-size: 1px;">9:56</td>
+                                </tr>
+                                <tr>
+                                    <td>椰果脆筒</td>
+                                    <td style="font-size: 2px;">新宇侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：4590916253</td>
+                                    <td style="font-size: 1px;">10:13</td>
+                                </tr>
+                                <tr>
+                                    <td>椰冻雪杯</td>
+                                    <td style="font-size: 2px;">水泡侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：9162635181</td>
+                                    <td style="font-size: 1px;">10:20</td>
+                                </tr>
+                                <tr>
+                                    <td>多肉冰棒</td>
+                                    <td style="font-size: 2px;">荒野侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：7110638583</td>
+                                    <td style="font-size: 1px;">10:27</td>
+                                </tr>
+                                <tr>
+                                    <td>奶皮冰棒</td>
+                                    <td style="font-size: 2px;">金刃侠</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><b>累计订单</b></th>
+                                    <td><b>47</b></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card" style="border: 2px solid yellow;">
+                        <table class="table" style="background: ghostwhite;">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" width: 150>取消订单</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：1048558779</td>
+                                    <td style="font-size: 1px;">8:51</td>
+                                </tr>
+                                <tr>
+                                    <td>琥珀兰</td>
+                                    <td style="font-size: 2px;">死灵暗侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：8188524898</td>
+                                    <td style="font-size: 1px;">9:46</td>
+                                </tr>
+                                <tr>
+                                    <td>伊拉克深度原油茶</td>
+                                    <td style="font-size: 2px;">火焰女郎</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">订单号：8188524898</td>
+                                    <td style="font-size: 1px;">9:58</td>
+                                </tr>
+                                <tr>
+                                    <td>叙利亚土质导弹茶</td>
+                                    <td style="font-size: 2px;">棱镜侠</td>
+                                </tr>
+                                <thead></thead>
+                                <tr>
+                                    <td style="font-size: 1px;">&nbsp;</td>
+                                    <td style="font-size: 1px;">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td style="font-size: 2px;">&nbsp;</td>
+                                </tr>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th><b>累计订单</b></th>
+                                    <td><b>3</b></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

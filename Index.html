@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>饮杯茶先</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="css/all.css"> -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script src="js/all.js"></script>
+
+    <script>
+        function reductionOf(obj) {
+            //减前判断
+                if ($(obj).next().val() == '') {
+                    $(obj).next().val(1);
+                }
+                if ($(obj).next().val() != '1') {
+                    $(obj).next().val(parseInt($(obj).next().val()) - 1);//数值减
+                }                
+                $(obj).next().val($(obj).next().val());//赋值给框
+            };
+            //加数量
+            function add(obj) {
+                    //加前判断
+                if ($(obj).prev().val() == '') {
+                    $(obj).prev().val(1);
+                }
+                $(obj).prev().val(parseInt($(obj).prev().val()) + 1);//数值加
+                $(obj).prev().val($(obj).prev().val());//赋值给框
+            };
+            //校验数字格式（只能输入正整数）
+            function checkNumber(obj) {
+                var reg = /^[1-9]\d*$/;
+                if(!reg.test($(obj).val()) || $(obj).val()==''){
+                    $(obj).val(1);
+                }
+            }
+    </script>
+
+    <style>
+        .dropdown>button:focus {
+            box-shadow: 0 0 0 0rem !important;
+        }
+
+        .btn-cart {
+            background-color: transparent;
+            position: relative;
+        }
+
+        .dropdown .btn-cart .badge {
+            position: absolute;
+            top: -1px;
+            right: -1px;
+        }
+
+        .dropdown-menu-right {
+            right: 0px;
+            left: auto;
+        }
+
+        .jumbotron-bg {
+            background-image: url('https://images.unsplash.com/photo-1477901492169-d59e6428fc90?w=1350');
+            background-size: cover;
+            background-position: center center;
+            min-height: 400px;
+        }
+
+        .bg-lighter {
+            background-color: rgba(255, 255, 255, .65);
+        }
+
+        .box-shadow {
+            box-shadow: 0 3px 5px rgba(0, 0, 0, .16);
+            transition: box-shadow .3s;
+        }
+
+        .header-carousel-item {
+            height: 450px;
+        }
+
+        .form-control {
+          border-width: 3px;
+        }
+
+        .bg-cover {
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, .6);
+        }
+
+        @media(min-width: 768px) {
+          .text-md-dark {
+            color: #333;
+          }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <i class="fa fa-coffee text-info" aria-hidden="true"></i>
+            饮杯茶先
+        </a>
+        <form class="form-inline my-2 my-lg-0">
+            <input type="search" class="form-control col-md-4 col-9 rounded-0" style="width: 300px;" placeholder="搜索饮品" aria-label="Search">
+            <button class="btn btn-outline-warning my-2 my-sm-0 rounded-0" type="submit">搜索</button>
+        </form>
+        <div class="dropdown ml-auto">          
+            <button class="btn btn-sm btn-cart" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <strong style="font-size: 20px;">查看购物袋</strong>
+                <i class="fa fa-shopping-cart text-dark fa-2x" aria-hidden="true"></i>
+                <span class="badge badge-pill badge-danger">2</span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right p-2" style="min-width: 300px;" aria-labelledby="dropdownMenuButton">
+                <table class="table table-sm">
+                    <h6 class="mb-3 pt-2">已选择饮品</h6>
+                    <tbody>
+                        <tr>
+                            <td class="align-middle text-center">
+                                <a href="#removeModal" class="text-muted" data-toggle="modal" data-target="#removeModal" data-title="删除 多肉蓝莓 1 杯" data-backdrop="static">
+                                    <i class="far fa-trash-alt" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td class="align-middle">多肉蓝莓</td>
+                            <td class="align-middle">1 杯</td>
+                            <td class="align-middle text-center">￥29</td>
+                        </tr>
+                        <tr>
+                            <td class="align-middle text-center">
+                                <a href="#removeModal" class="text-muted" data-toggle="modal" data-target="#removeModal" data-title="删除 芒果甘露 1 杯" data-backdrop="static">
+                                    <i class="far fa-trash-alt" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                            <td class="align-middle">芒果甘露</td>
+                            <td class="align-middle">1 杯</td>
+                            <td class="align-middle text-center">￥27</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="./order.html" class="btn btn-primary btn-block">去结账</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="ml-3 mr-3">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active header-carousel-item bg-cover" style="background-image: url(./images/轮播图1.jpg);">
+                </div>
+                <div class="carousel-item header-carousel-item bg-cover" style="background-image: url(./images/轮播图2.jpg);">
+                </div>
+                <div class="carousel-item header-carousel-item bg-cover" style="background-image: url(./images/轮播图3.jpg);">
+                </div>
+                <div class="carousel-item header-carousel-item bg-cover" style="background-image: url(./images/轮播图4.jpg);">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="list-group sticky-top">
+                        <a href="#pane-1" class="list-group-item list-group-item-action active" data-toggle="list">
+                            <i class="fab fa-hotjar"></i>金牌热销
+                        </a>
+                        <a href="#pane-2" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fas fa-wind"></i>当季限定
+                        </a>
+                        <a href="#pane-3" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="far fa-snowflake"></i>冰凉甜品
+                        </a>
+                        <a href="#pane-4" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fas fa-wine-bottle"></i>瓶装饮品
+                        </a>
+                        <a href="#pane-5" class="list-group-item list-group-item-action" data-toggle="list">
+                            <i class="fas fa-mug-hot"></i>古典纯茶
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-md-10">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="pane-1">
+                            <div class="row mt-2 mt-md-4 mb-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥29</h3>
+                                        <img class="card-img-top" src="./images/多肉蓝莓.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">多肉蓝莓</h5>
+                                            <p class="card-text">夏季葡萄回归，颗颗手剥，保留完整肉感。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥27</h3>
+                                        <img class="card-img-top" src="./images/芒果甘露.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">芒果甘露</h5>
+                                            <p class="card-text">甄选当即台芒，增加生打椰乳，更加弹润更好吸收。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥33</h3>
+                                        <img class="card-img-top" src="./images/草莓芝茶.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">草莓芝茶</h5>
+                                            <p class="card-text">鲜采草莓搭配定制绿妍茶底，伴随芝士入口，莓香满溢。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥25</h3>
+                                        <img class="card-img-top" src="./images/鲜椰奶冻.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">鲜椰奶冻</h5>
+                                            <p class="card-text">选用优质椰肉，椰香浓郁，质地如奶油般丝滑。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥25</h3>
+                                        <img class="card-img-top" src="./images/蜜糖红柚.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">蜜糖红柚</h5>
+                                            <p class="card-text">饱满果粒如茶，清幽茶底洋溢茉莉花香，更凸显茶味。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥32</h3>
+                                        <img class="card-img-top" src="./images/芝芝芒芒.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">芝芝芒芒</h5>
+                                            <p class="card-text">特制芒果茶底，果香高扬，带来满分味觉体验。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥27</h3>
+                                        <img class="card-img-top" src="./images/芋香珍珠.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">芋香珍珠</h5>
+                                            <p class="card-text">新鲜芋泥融入顺滑牛乳，绵密于润泽，尽在这一杯。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥31</h3>
+                                        <img class="card-img-top" src="./images//芝莓桃桃.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">芝莓桃桃</h5>
+                                            <p class="card-text">草莓和蜜桃的首次灵感混搭，一次喝到两款人气饮品。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block disabled" data-toggle="buttons">缺货中</label>
+                                        </div>
+                                    </div>
+                                </div>                               
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-70" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥22</h3>
+                                        <img class="card-img-top" src="./images/焦糖牛乳.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">焦糖牛乳</h5>
+                                            <p class="card-text">黑波波搭配焦糖，牛乳顺滑，口感浓郁。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block disabled" data-toggle="buttons">缺货中</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="pane-2">
+                            <div class="row mt-md-4 mb-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥29</h3>
+                                        <img class="card-img-top" src="./images/多肉酸梅.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">多肉酸梅</h5>
+                                            <p class="card-text">更大颗更饱满，果肉于清幽茶底风味融合，纵享夏日酣畅。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥19</h3>
+                                        <img class="card-img-top" src="./images/岩爆柠檬.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">岩爆柠檬</h5>
+                                            <p class="card-text">独家定制岩骨香茶，双重茶香加持，冰爽回甘。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥28</h3>
+                                        <img class="card-img-top" src="./images/雪思龙眼.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">雪思龙眼</h5>
+                                            <p class="card-text">保留龙眼原始的蜜香清甜，佐以桂花冻，花香果甜一口满足。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥25</h3>
+                                        <img class="card-img-top" src="./images/椰芒糯米.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">椰芒糯米</h5>
+                                            <p class="card-text">肉厚多汁，香滑无渣，泰国糯米拌入椰奶，嚼出三重香。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥29</h3>
+                                        <img class="card-img-top" src="./images/冰山杨桃.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">冰山杨桃</h5>
+                                            <p class="card-text">全新登场，层次口感双升级，穿透舌尖的鲜爽。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 正常冰
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 少冰
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="pane-3">
+                            <div class="row mt-md-4 mb-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥9</h3>
+                                        <img class="card-img-top" src="./images/椰果脆筒.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">椰果脆筒</h5>
+                                            <p class="card-text">添加泰国进口椰浆打制，质地如奶油般丝滑。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通份
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大份
+                                                </label>
+                                            </div>        
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>                                   
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥13</h3>
+                                        <img class="card-img-top" src="./images/椰冻雪杯.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">椰冻雪杯</h5>
+                                            <p class="card-text">现制嫩滑椰奶坠入冰激凌杯，三重口感好满足。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通份
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大份
+                                                </label>
+                                            </div> 
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥13</h3>
+                                        <img class="card-img-top" src="./images/甘芒雪杯.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">甘芒雪杯</h5>
+                                            <p class="card-text">椰奶冰淇淋搭配新鲜芒果肉、脆波波与西柚，口感丰富。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通份
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大份
+                                                </label>
+                                            </div> 
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥13</h3>
+                                        <img class="card-img-top" src="./images/波波雪杯.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">波波雪杯</h5>
+                                            <p class="card-text">丝滑牛乳香与椰奶冰淇淋交织，佐以古法黑糖，入口难忘。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通份
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大份
+                                                </label>
+                                            </div> 
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥15</h3>
+                                        <img class="card-img-top" src="./images/多肉冰棒.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">多肉冰棒</h5>
+                                            <p class="card-text">定制绿妍搭配多肉果粒与芝芝冰淇淋，口感更冰爽。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通份
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大份
+                                                </label>
+                                            </div> 
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥15</h3>
+                                        <img class="card-img-top" src="./images/奶皮冰棒.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">奶皮冰棒</h5>
+                                            <p class="card-text">奶茶冰淇淋被雪藏在锡兰红茶中，底层搭配黑糖波波，奶茶冰着吃。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通份
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大份
+                                                </label>
+                                            </div> 
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="pane-4">
+                            <div class="row mt-md-4 mb-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥8</h3>
+                                        <img class="card-img-top" src="./images/地中海金凤果汁茶.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">地中海金凤果汁茶</h5>
+                                            <p class="card-text">来自地中海的水蜜桃风味，香气迷人，带有乌龙茶味道。</p>
+                                        </div>     
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>                                   
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥8</h3>
+                                        <img class="card-img-top" src="./images/利比亚西柚果汁茶.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">利比亚西柚果汁茶</h5>
+                                            <p class="card-text">源于利比亚半岛的西柚风味，果味酸甜，回甘不腻。</p>
+                                        </div>         
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>                                  
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥5.5</h3>
+                                        <img class="card-img-top" src="./images/阿根廷樱桃果汁茶.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">阿根廷樱桃果汁茶</h5>
+                                            <p class="card-text">香气迷人的樱桃风味，后段带出淡淡清新海盐味，清爽带气。</p>
+                                        </div>  
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>                                         
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥5.5</h3>
+                                        <img class="card-img-top" src="./images/波西亚时光水果茶.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">波西亚时光水果茶</h5>
+                                            <p class="card-text">含有膳食纤维，各种水果碰撞出热带气息，酸甜清新。</p>
+                                        </div>     
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>                                     
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥500</h3>
+                                        <img class="card-img-top" src="./images/叙利亚土质导弹茶.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">叙利亚土质导弹茶</h5>
+                                            <p class="card-text">采用叙利亚古法特质，零糖零卡零脂，唤醒生存本能。</p>
+                                        </div>      
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>                                     
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block disabled" data-toggle="buttons">缺货中</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥50</h3>
+                                        <img class="card-img-top" src="./images/伊拉克深度原油茶.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">伊拉克深度原油茶</h5>
+                                            <p class="card-text">来自伊拉克深层地下的天然原油，无添加人工合成色素。</p>
+                                        </div>       
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>                                   
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block disabled" data-toggle="buttons">缺货中</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="pane-5">
+                            <div class="row mt-md-4 mb-4">
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥16</h3>
+                                        <img class="card-img-top" src="./images/琥珀兰.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">琥珀兰</h5>
+                                            <p class="card-text">大师监制全新琥珀蓝兰底，香味奇高，回味别有芬芳。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 无糖
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 加糖
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥16</h3>
+                                        <img class="card-img-top" src="./images/四季春.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">四季春</h5>
+                                            <p class="card-text">兼有绿茶香气与乌龙茶的韵味，茶香四溢，回韵清爽悠长。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 无糖
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 加糖
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥13</h3>
+                                        <img class="card-img-top" src="./images/大红袍.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">大红袍</h5>
+                                            <p class="card-text">定制大红袍，气质淡雅芳幽，散发着清逸的香气，馥郁宜人。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 无糖
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 加糖
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥22</h3>
+                                        <img class="card-img-top" src="./images/铁观音.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">铁观音</h5>
+                                            <p class="card-text">香气炭焙浓郁，入喉回甘，茶香余韵不断。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary active">
+                                                    <input type="radio" name="ice" checked> 无糖
+                                                </label>
+                                                <label class="btn btn-outline-secondary">
+                                                    <input type="radio" name="ice"> 加糖
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block btn-group-toggle" data-toggle="buttons">加入购物袋</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-4">
+                                    <div class="card box-shadow border-0 text-center h-100" style="position: relative;">
+                                        <h3 style="position: absolute; top: 0%; left: 0%;">￥220</h3>
+                                        <img class="card-img-top" src="./images/特级龙井.jpg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">特级龙井</h5>
+                                            <p class="card-text">精选龙井茶叶调制，口感如丝般顺滑。</p>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="size" checked> 普通杯
+                                                </label>
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="size"> 大杯
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="ice" checked> 无糖
+                                                </label>
+                                                <label class="btn btn-outline-secondary disabled">
+                                                    <input type="radio" name="ice"> 加糖
+                                                </label>
+                                            </div>
+                                            <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="-" onclick="reductionOf(this)" />      
+                                                <input style="text-align: center; width: 20px; height: 38px; float: left;" type="text" value="1" onblur="checkNumber(this)" />      
+                                                <input style="width: 25px; height: 38px; border: 2px white; float: left;" type="button" value="+" onclick="add(this)" />                            
+                                            </div>
+                                        </div>
+                                        <div class="card-fotter border-top-0 bg-white">
+                                            <label class="btn btn-outline-secondary btn-block disabled" data-toggle="buttons">缺货中</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>       
+
+        <div class="col-lg-2">
+            <div class="list-group sticky-top">
+                <div class="p-4 bg-cover text-black" style="background-image: url(./images/广告图.jpg);">
+                    <div class="row">
+                        <div style="text-align: center;">
+                            <small><strong>关于我们<strong></small>
+                            <h5><strong>2102年，</h5><h5><i class="fa fa-coffee text-info" aria-hidden="true"></i>饮杯茶先<br/>起源于一条名叫三典挤的小巷。</h5></strong>
+                            <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;饮杯茶先 想要分享给顾客的就是茶的真味，给顾客带来纯粹纯正的好茶。自创立以来，我们专注于呈现来自世界各地的优质茶香，让这茶饮这一古老文化焕发出新的生命力。</strong></p>
+                            <a href="./Backend.html" class="btn btn-outline-primary">了解更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <a href="#" class="btn btn-secondary mr-1" style="width: 30%;">
+            <i class="fas fa-allergies" style="font-size: 50px;"></i>
+            <h3>门店自取</h3>
+        </a>
+        <a href="./order.html" class="btn btn-primary mr-1" style="width: 30%;">
+            <i class="fas fa-motorcycle" style="font-size: 50px;"></i>
+            <h3>外卖订单</h3>
+        </a>
+    </div>
+    
+
+    <footer class="bg-light text-muted py-3">
+        <div class="contianer">
+            <ul class="list-inline text-center">
+                <li class="list-inline-item">© Copright 2021 饮杯茶先</li>
+                <li class="list-inline-item">
+                    <a href="#" class="text-info">
+                        <i class="fab fa-weixin"></i> 微信
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="./Backend.html" class="text-info">了解更多</a>
+                </li>
+            </ul>
+            <p class="text-center">Made with Bootstrap5</p>
+        </div>
+    </footer>
+
+</body>
+</html>
